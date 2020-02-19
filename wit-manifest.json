@@ -20,7 +20,7 @@
         "source": "git@github.com:sifive/freedom-e-sdk-pip-cache.git"
     },
     {
-        "commit": "726d8761fba8108d4038c050dbd80d539766a11b",
+        "commit": "0dc1aadd75059a64990fb2283fe071022bbb2077",
         "name": "devicetree-overlay-generator",
         "source": "git@github.com:sifive/devicetree-overlay-generator.git"
     },
@@ -40,7 +40,7 @@
         "source": "git@github.com:sifive/openocdcfg-generator.git"
     },
     {
-        "commit": "cff1b713ac789bea21bcb794c6e376dd7d8ca8dc",
+        "commit": "29e0788525409fa34d6820cb04a4341e5bca2e45",
         "name": "esdk-settings-generator",
         "source": "git@github.com:sifive/esdk-settings-generator.git"
     },
