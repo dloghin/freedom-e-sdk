@@ -1,14 +1,8 @@
 /**
  * Compute e using Euler's formula
  */
-#define PFDEBUG
-#define FIXEDN
-
-#ifdef FIXEDN
-#define N 20
-#else
-#include<stdlib.h>
-#endif // FIXEDN
+// #define PFDEBUG
+// #define WITH_POSIT_32
 
 #include<stdint.h>
 
@@ -16,31 +10,63 @@
 #include <stdio.h>
 #endif
 
-int main(int argc, char** argv) {
-  int n, i;
-  float e, fact;
+#define N 10
 
-#ifdef FIXEDN
-  n = N;
+typedef float element_t;
+
+// variables
+element_t e, k, fact;
+
+// constants
+element_t one, two;
+#if defined WITH_POSIT_32
+/*
+// posit(32,2)
+uint32_t posit_zero = 0x00000000;
+uint32_t posit_one = 0x40000000;
+uint32_t posit_two = 0x48000000;
+*/
+
+// posit(32,3)
+uint32_t posit_zero = 0x00000000;
+uint32_t posit_one = 0x40000000;
+uint32_t posit_two = 0x44000000;
+#elif (defined WITH_POSIT_16)
+uint32_t posit_zero = 0x00000000;
+uint32_t posit_one = 0x00004000;
+uint32_t posit_two = 0x00004800;
+#elif (defined WITH_POSIT_8)
+uint32_t posit_zero = 0x00000000;
+uint32_t posit_one = 0x00000040;
+uint32_t posit_two = 0x00000050;
 #else
-  if (argc < 2) {
-#ifdef PFDEBUG
-    printf("Usage: %s <iterations>\n", argv[0]);
-#endif // PFDEBUG
-    return -1;
-  }
-  n = atoi(argv[1]);
-#endif // FIXEDN
+uint32_t fp32_zero = 0x00000000;
+uint32_t fp32_one = 0x3f800000;
+uint32_t fp32_two = 0x40000000;
+#endif /* WITH_POSIT */
 
-  e = 2.0;
-  fact = 1.0;
-  for (i = 2; i < n; i++) {
-    fact = fact / i;
+int main() {
+#if (defined WITH_POSIT_8 || defined WITH_POSIT_16 || defined WITH_POSIT_32)
+  *((uint32_t*)&one) = posit_one;
+  *((uint32_t*)&two) = posit_two;
+  *((uint32_t*)&e) = posit_two;
+  *((uint32_t*)&k) = posit_two;
+  *((uint32_t*)&fact) = posit_one;
+#else
+  *((uint32_t*)&one) = fp32_one;
+  *((uint32_t*)&two) = fp32_two;
+  *((uint32_t*)&e) = fp32_two;
+  *((uint32_t*)&k) = fp32_two;
+  *((uint32_t*)&fact) = fp32_one;
+#endif /* WITH_POSIT */
+  int i;
+  for (i = 2; i < N; i++) {
+    fact = fact / k;
+    k = k + one;    
     e = e + fact;
   }
 #ifdef PFDEBUG
-  printf("Euler's number with %i iterations: ", n);
-  printf("%9.8f\n", e);
+  printf("%15.14f\n", e);
 #endif
 	return 0;
 }
