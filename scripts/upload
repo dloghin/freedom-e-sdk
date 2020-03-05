@@ -38,10 +38,11 @@ echo -e "loadfile $hex\nrnh\nexit" | $jlink -device FE310 -if JTAG -speed 4000 -
 
 else
 
-$openocd -f $cfg &
+# $openocd -f $cfg &
+$openocd -f $cfg
 
-$gdb $elf --batch -ex "set remotetimeout 240" -ex "target extended-remote localhost:${GDB_PORT}" -ex "monitor reset halt" -ex "monitor flash protect 0 64 last off" -ex "load" -ex "monitor resume" -ex "monitor shutdown" -ex "quit"
+# $gdb $elf --batch -ex "set remotetimeout 240" -ex "target extended-remote localhost:${GDB_PORT}" -ex "monitor reset halt" -ex "monitor flash protect 0 64 last off" -ex "load" -ex "monitor resume" -ex "monitor shutdown" -ex "quit"
 
-kill %1
+# kill %1
 
 fi
