@@ -1,5 +1,34 @@
 # SiFive Freedom E SDK README #
 
+## How to upload and debug a program
+
+Lets use Euler program that computes constant e.
+
+Open one terminal and run:
+
+```
+source env.sh
+make PROGRAM=euler TARGET=freedom-e310-arty-64bit-fpu CONFIGURATION=debug clean
+make PROGRAM=euler TARGET=freedom-e310-arty-64bit-fpu CONFIGURATION=debug software
+make PROGRAM=euler TARGET=freedom-e310-arty-64bit-fpu CONFIGURATION=debug upload
+```
+
+after each small modification, you can just run:
+
+```
+make PROGRAM=euler TARGET=freedom-e310-arty-64bit-fpu CONFIGURATION=debug upload
+```
+
+Open a second terminal and run:
+
+```
+source env.sh
+cd software/euler
+riscv64-unknown-elf-gdb debug/euler.elf
+```
+
+## Original README
+
 This repository, maintained by SiFive Inc, makes it easy to get started developing
 software for the Freedom E and Freedom S Embedded RISC-V Platforms. This SDK
 is intended to work on any target supported by SiFive's distributions of the
