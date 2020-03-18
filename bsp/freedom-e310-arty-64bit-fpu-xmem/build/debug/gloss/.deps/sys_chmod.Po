@@ -1,0 +1,83 @@
+gloss/sys_chmod.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/gloss/sys_chmod.c \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/errno.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/errno.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/reent.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/_ansi.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/newlib-nano/newlib.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/_newlib_version.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/config.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/ieeefp.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/features.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_types.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_types.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_default_types.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/lock.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/types.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/cdefs.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_stdint.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/endian.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_endian.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/select.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_sigset.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_timeval.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/timespec.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_timespec.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_pthreadtypes.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/sched.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/types.h
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/errno.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/errno.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/reent.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/_ansi.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/newlib-nano/newlib.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/_newlib_version.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/config.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/ieeefp.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/features.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_types.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_types.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_default_types.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/lock.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/types.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/cdefs.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_stdint.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/endian.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/_endian.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/select.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_sigset.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_timeval.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/timespec.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_timespec.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/_pthreadtypes.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/sys/sched.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/riscv64-unknown-elf/include/machine/types.h:

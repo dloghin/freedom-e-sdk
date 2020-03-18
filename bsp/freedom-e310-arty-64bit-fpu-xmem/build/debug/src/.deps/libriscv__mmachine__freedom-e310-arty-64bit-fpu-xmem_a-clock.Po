@@ -1,0 +1,8 @@
+src/libriscv__mmachine__freedom-e310-arty-64bit-fpu-xmem_a-clock.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/src/clock.c \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/metal/clock.h \
+ /home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h
+
+/home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/metal/clock.h:
+
+/home/dumi/git/riscv/riscv-tools-32/riscv64-unknown-elf-gcc-8.3.0-2019.08.0-x86_64-linux-ubuntu14/lib/gcc/riscv64-unknown-elf/8.3.0/include/stddef.h:

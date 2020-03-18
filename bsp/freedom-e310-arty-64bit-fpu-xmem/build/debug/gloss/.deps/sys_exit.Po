@@ -1,0 +1,5 @@
+gloss/sys_exit.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/gloss/sys_exit.c \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/metal/shutdown.h
+
+/home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/metal/shutdown.h:

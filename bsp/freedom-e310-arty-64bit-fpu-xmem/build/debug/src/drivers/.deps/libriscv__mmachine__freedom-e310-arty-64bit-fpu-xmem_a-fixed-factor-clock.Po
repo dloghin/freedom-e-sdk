@@ -1,0 +1,5 @@
+src/drivers/libriscv__mmachine__freedom-e310-arty-64bit-fpu-xmem_a-fixed-factor-clock.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/src/drivers/fixed-factor-clock.c \
+ metal/machine/platform.h
+
+metal/machine/platform.h:

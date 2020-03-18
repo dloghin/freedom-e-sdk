@@ -1,0 +1,5 @@
+src/drivers/libriscv__mmachine__freedom-e310-arty-64bit-fpu-xmem_a-sifive_trace.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/src/drivers/sifive_trace.c \
+ metal/machine/platform.h
+
+metal/machine/platform.h:

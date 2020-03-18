@@ -7,15 +7,19 @@
 #endif
 
 #define PFDEBUG
-#define WITH_POSIT_32
+// #define WITH_POSIT_32
 
-#define N 4
+#define N 64
 
 typedef float element_t;
 
+#ifndef WITH_MALLOC
+static element_t sa[N * N], sb[N * N], sc[N * N];
+#endif
+
 // constants
 element_t zero, one, two, pi;
-#if defined WITH_POSIT_32       // posit 32,3
+#if (defined WITH_POSIT_32)       // posit 32,3
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x40000000;
 uint32_t posit_two = 0x44000000;
@@ -52,9 +56,15 @@ void init() {
 void init_matrix(element_t** a, element_t** b, element_t** c, int n) {
   int i, j;
 
+#ifdef WITH_MALLOC
   *a = (element_t*)malloc(n * n * sizeof(float));
   *b = (element_t*)malloc(n * n * sizeof(float));
   *c = (element_t*)malloc(n * n * sizeof(float));
+#else
+  *a = &(sa[0]);
+  *b = &(sb[0]);
+  *c = &(sc[0]);
+#endif
 
   for (i = 0; i < n; i++)
     for (j = 0; j < n; j++) {
@@ -98,8 +108,8 @@ unsigned long long read_cycles() {
 #if defined(__x86_64__)
   return 0;
 #else
-    struct metal_cpu *mycpu = metal_cpu_get(0);
-    return metal_cpu_get_timer(mycpu);
+  struct metal_cpu *mycpu = metal_cpu_get(0);
+  return metal_cpu_get_timer(mycpu);
 #endif
 }
 
@@ -120,8 +130,10 @@ int main() {
   print_matrix(b, N, N);
   print_matrix(c, N, N);
 #endif
+#ifdef WITH_MALLOC
   free(a);
   free(b);
   free(c);
+#endif
   return 0;
 }

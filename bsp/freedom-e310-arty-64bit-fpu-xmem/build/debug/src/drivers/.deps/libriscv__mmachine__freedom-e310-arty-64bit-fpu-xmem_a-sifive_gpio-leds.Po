@@ -1,0 +1,5 @@
+src/drivers/libriscv__mmachine__freedom-e310-arty-64bit-fpu-xmem_a-sifive_gpio-leds.o: \
+ /home/dumi/git/riscv/freedom-e-sdk-dloghin/freedom-metal/src/drivers/sifive_gpio-leds.c \
+ metal/machine/platform.h
+
+metal/machine/platform.h:
