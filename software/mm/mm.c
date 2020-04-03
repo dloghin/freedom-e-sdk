@@ -2,56 +2,16 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#if !defined(__x86_64__)
-#include <metal/cpu.h>
-#endif
+#include "../common/posit.h"
+#include "../common/perf.h"
 
 #define PFDEBUG
-// #define WITH_POSIT_32
 
-#define N 64
-
-typedef float element_t;
+#define N 182
 
 #ifndef WITH_MALLOC
 static element_t sa[N * N], sb[N * N], sc[N * N];
 #endif
-
-// constants
-element_t zero, one, two, pi;
-#if (defined WITH_POSIT_32)       // posit 32,3
-uint32_t posit_zero = 0x00000000;
-uint32_t posit_one = 0x40000000;
-uint32_t posit_two = 0x44000000;
-uint32_t posit_pi = 0x46487eca;
-#elif (defined WITH_POSIT_16)   // posit 16,2
-uint32_t posit_zero = 0x00000000;
-uint32_t posit_one = 0x00004000;
-uint32_t posit_two = 0x00004800;
-#elif (defined WITH_POSIT_8)    // posit 8,1
-uint32_t posit_zero = 0x00000000;
-uint32_t posit_one = 0x00000040;
-uint32_t posit_two = 0x00000050;
-#else
-uint32_t fp32_zero = 0x00000000;
-uint32_t fp32_one = 0x3f800000;
-uint32_t fp32_two = 0x40000000;
-uint32_t fp32_pi = 0x40490fd9;
-#endif /* WITH_POSIT */
-
-void init() {
-#if (defined WITH_POSIT_8 || defined WITH_POSIT_16 || defined WITH_POSIT_32)
-  *((uint32_t*)&zero) = posit_zero;
-  *((uint32_t*)&one) = posit_one;
-  *((uint32_t*)&two) = posit_two;
-  *((uint32_t*)&pi) = posit_pi;
-#else
-  *((uint32_t*)&zero) = fp32_zero;
-  *((uint32_t*)&one) = fp32_one;
-  *((uint32_t*)&two) = fp32_two;
-  *((uint32_t*)&pi) = fp32_pi;
-#endif /* WITH_POSIT */
-}
 
 void init_matrix(element_t** a, element_t** b, element_t** c, int n) {
   int i, j;
@@ -104,19 +64,10 @@ void print_matrix(element_t* a, int n, int m) {
 }
 #endif
 
-unsigned long long read_cycles() {
-#if defined(__x86_64__)
-  return 0;
-#else
-  struct metal_cpu *mycpu = metal_cpu_get(0);
-  return metal_cpu_get_timer(mycpu);
-#endif
-}
-
 int main() {
   element_t *a, *b, *c;
   // init constants  
-  init();
+  init_constants();
   // init matrix
   init_matrix(&a, &b, &c, N);
   // multiply
@@ -126,9 +77,9 @@ int main() {
   endc = endc - startc;
 #ifdef PFDEBUG
   printf("Cycles %lu\n", endc);
-  print_matrix(a, N, N);
-  print_matrix(b, N, N);
-  print_matrix(c, N, N);
+//  print_matrix(a, N, N);
+//  print_matrix(b, N, N);
+//	print_matrix(c, N, N);
 #endif
 #ifdef WITH_MALLOC
   free(a);
