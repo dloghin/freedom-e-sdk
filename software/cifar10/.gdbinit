@@ -1,8 +1,11 @@
 set remotetimeout 300
 target remote localhost:3333
 load
-break euler.c:87
+break cifar10.c:90
+break cifar10.c:101
 cont
-x &e
+x &max
+p idx
+cont
 p endc
 quit

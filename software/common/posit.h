@@ -1,6 +1,6 @@
 #pragma once
 
-#define WITH_POSIT_32
+// #define WITH_POSIT_32
 // #define WITH_POSIT_16
 // #define WITH_POSIT_8
 

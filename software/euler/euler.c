@@ -2,7 +2,8 @@
  * Compute e using Euler's formula
  */
 #define PFDEBUG
-// #define WITH_POSIT_32
+#define WITH_INT_INDEX
+#define WITH_POSIT_32
 
 #include <stdint.h>
 #include <metal/cpu.h>
@@ -26,7 +27,7 @@ element_t one, two;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x40000000;
 uint32_t posit_two = 0x48000000;
-*/
+ */
 
 // posit(32,3)
 uint32_t posit_zero = 0x00000000;
@@ -47,36 +48,41 @@ uint32_t fp32_two = 0x40000000;
 #endif /* WITH_POSIT */
 
 unsigned long long read_cycles() {
-    struct metal_cpu *mycpu = metal_cpu_get(0);
-    return metal_cpu_get_timer(mycpu);
+	struct metal_cpu *mycpu = metal_cpu_get(0);
+	return metal_cpu_get_timer(mycpu);
 }
 
 int main() { 
-  unsigned long long startc = read_cycles(); 
+	unsigned long long startc = read_cycles();
 #if (defined WITH_POSIT_8 || defined WITH_POSIT_16 || defined WITH_POSIT_32)
-  *((uint32_t*)&one) = posit_one;
-  *((uint32_t*)&two) = posit_two;
-  *((uint32_t*)&e) = posit_two;
-  *((uint32_t*)&k) = posit_two;
-  *((uint32_t*)&fact) = posit_one;
+	*((uint32_t*)&one) = posit_one;
+	*((uint32_t*)&two) = posit_two;
+	*((uint32_t*)&e) = posit_two;
+	*((uint32_t*)&k) = posit_two;
+	*((uint32_t*)&fact) = posit_one;
 #else
-  *((uint32_t*)&one) = fp32_one;
-  *((uint32_t*)&two) = fp32_two;
-  *((uint32_t*)&e) = fp32_two;
-  *((uint32_t*)&k) = fp32_two;
-  *((uint32_t*)&fact) = fp32_one;
+	*((uint32_t*)&one) = fp32_one;
+	*((uint32_t*)&two) = fp32_two;
+	*((uint32_t*)&e) = fp32_two;
+	*((uint32_t*)&k) = fp32_two;
+	*((uint32_t*)&fact) = fp32_one;
 #endif /* WITH_POSIT */
-  int i;
-  for (i = 2; i < N; i++) {
-    fact = fact / k;
-    k = k + one;    
-    e = e + fact;
-  }
-  unsigned long long endc = read_cycles();
-  endc = endc - startc;
+	int i;
+	for (i = 2; i < N; i++) {
+#ifdef WITH_INT_INDEX
+		fact = fact / i;
+		e = e + fact;
+#else
+		fact = fact / k;
+		k = k + one;
+		e = e + fact;
+#endif
+	}
+	unsigned long long endc = read_cycles();
+	endc = endc - startc;
 #ifdef PFDEBUG
-  printf("Cycles %lu\n", endc);
-  printf("Euler %x", e);
+	printf("Cycles %lu\n", endc);
+	printf("Euler %x", e);
 #endif
 	return 0;
 }

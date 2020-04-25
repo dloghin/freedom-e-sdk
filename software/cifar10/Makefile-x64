@@ -1,0 +1,5 @@
+cifar10-x64: cifar10.c model2.c kernels.c qsort.c prob_sum_multiplier.o ip1_weights.o ip1_blob.o ip1_bias_mul.o relu3_in.o
+	gcc -g -Wall $^ -g -o $@ -lblas -lm
+
+clean:
+	rm -f cifar10-x64

@@ -1,0 +1,11 @@
+# Copyright 2019 SiFive, Inc #
+# SPDX-License-Identifier: Apache-2.0 #
+
+override CFLAGS += -DWITH_POSIT_8
+
+PROGRAM ?= cifar10
+
+$(PROGRAM): $(wildcard *.c) $(wildcard *.h) $(wildcard *-riscv64-posit8-1.o)
+
+clean:
+	rm -f $(PROGRAM) $(PROGRAM).hex
