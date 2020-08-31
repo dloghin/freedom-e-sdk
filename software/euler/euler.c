@@ -1,18 +1,18 @@
 /**
  * Compute e using Euler's formula
  */
-#define PFDEBUG
-#define WITH_INT_INDEX
-#define WITH_POSIT_32
+// #define PFDEBUG
+// #define WITH_INT_INDEX
+// #define WITH_POSIT_32
 
 #include <stdint.h>
-#include <metal/cpu.h>
+#include "../common/perf.h"
 
 #ifdef PFDEBUG
 #include <stdio.h>
 #endif
 
-#define N 13
+#define N 20
 
 typedef float element_t;
 
@@ -47,11 +47,6 @@ uint32_t fp32_one = 0x3f800000;
 uint32_t fp32_two = 0x40000000;
 #endif /* WITH_POSIT */
 
-unsigned long long read_cycles() {
-	struct metal_cpu *mycpu = metal_cpu_get(0);
-	return metal_cpu_get_timer(mycpu);
-}
-
 int main() { 
 	unsigned long long startc = read_cycles();
 #if (defined WITH_POSIT_8 || defined WITH_POSIT_16 || defined WITH_POSIT_32)
@@ -82,7 +77,10 @@ int main() {
 	endc = endc - startc;
 #ifdef PFDEBUG
 	printf("Cycles %lu\n", endc);
-	printf("Euler %x", e);
+	printf("Euler %x\n", e);
+#if defined(__x86_64__)
+	printf("Result: %.4f\n", e);
+#endif	// __x86_64__
 #endif
 	return 0;
 }

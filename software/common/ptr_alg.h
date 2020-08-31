@@ -368,8 +368,8 @@ int_t matrix_inverse(element_t *i_matrix_A,
 	return_value = matrix_determinant(i_matrix_A, i_size, i_matrix_aux2,
 			i_matrix_aux3, &determinant);
 
-	printf("det %x\n", *((uint32_t*)&determinant));
-	printf("det %f\n", determinant);
+	// printf("det %x\n", *((uint32_t*)&determinant));
+	// printf("det %f\n", determinant);
 
 	if(return_value != 0) {
 		return return_value;

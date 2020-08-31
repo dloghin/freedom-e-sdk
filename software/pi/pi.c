@@ -2,12 +2,12 @@
 // Approximation of the number PI
 // Language: C
 // Author: Jose Cintra (jose.cintra@html-apps.info)
-#define PFDEBUG
+// #define PFDEBUG
 
-#define WITH_POSIT_8
+// #define WITH_POSIT_8
 
 // #define VIETE
-#define LEIBNIZ
+// #define LEIBNIZ
 
 #ifdef VIETE
 #define WITH_SQRT
@@ -18,7 +18,7 @@
 #endif
 
 #include <stdint.h>
-#include <metal/cpu.h>
+#include "../common/perf.h"
 
 #ifdef WITH_SQRT
 float sqrt_asm(float x) {
@@ -155,11 +155,6 @@ void nilakantha(int n) {
 		sign = sign * minus_one;
 		i = i + two;
 	}
-}
-
-unsigned long long read_cycles() {
-	struct metal_cpu *mycpu = metal_cpu_get(0);
-	return metal_cpu_get_timer(mycpu);
 }
 
 int main() {
