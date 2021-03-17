@@ -12,7 +12,7 @@ c  in this directory. Do not modify it by hand.
 /* number of iterations and how often to print the norm */
 #define	ITMAX_DEFAULT	50
 #define	INORM_DEFAULT	50
-#define	DT_DEFAULT	0.5
+// #define	DT_DEFAULT	0.5
 #define	CONVERTDOUBLE	FALSE
 #define COMPILETIME "13 Mar 2021"
 #define NPBVERSION "3.0 structured"

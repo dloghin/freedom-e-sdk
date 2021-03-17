@@ -13,11 +13,17 @@ c-------------------------------------------------------------------*/
 
 #include "npbparams.h"
 
+typedef float element_t;
+typedef int boolean;
+
+#define TRUE	1
+#define FALSE	0
+
 /* common /global */
 static int grid_points[3];
 
 /* common /constants/ */
-static double tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3, 
+static element_t tx1, tx2, tx3, ty1, ty2, ty3, tz1, tz2, tz3,
               dx1, dx2, dx3, dx4, dx5, dy1, dy2, dy3, dy4, 
               dy5, dz1, dz2, dz3, dz4, dz5, dssp, dt, 
               ce[13][5], dxmax, dymax, dzmax, xxcon1, xxcon2, 
@@ -43,7 +49,7 @@ c   for even number sizes only
 c-------------------------------------------------------------------*/
 
 /* common /fields/ */
-static double u       [5][IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
+static element_t u       [5][IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
 	      us      [IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
               vs      [IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
               ws      [IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
@@ -57,7 +63,7 @@ static double u       [5][IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1],
               lhs     [15][IMAX/2*2+1][JMAX/2*2+1][KMAX/2*2+1];
 
 /* common /work_1d/ */
-static double cv[PROBLEM_SIZE], rhon[PROBLEM_SIZE],
+static element_t cv[PROBLEM_SIZE], rhon[PROBLEM_SIZE],
               rhos[PROBLEM_SIZE], rhoq[PROBLEM_SIZE],
               cuf[PROBLEM_SIZE], q[PROBLEM_SIZE],
               ue[5][PROBLEM_SIZE], buf[5][PROBLEM_SIZE];

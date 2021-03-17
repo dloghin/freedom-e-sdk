@@ -41,7 +41,7 @@
 
 #include "../common/perf.h"
 
-// #define PFDEBUG
+#define PFDEBUG
 
 #ifdef PFDEBUG
 #include <stdio.h>
@@ -113,6 +113,8 @@ void init_constants() {
 	*((uint32_t*)&c_dtref) = fp32_01;
 #endif /* WITH_POSIT */
 }
+
+#define	DT_DEFAULT	(one/hundred)
 
 float sqrt_asm(float x) {
 	float res;
