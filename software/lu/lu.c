@@ -42,7 +42,8 @@
 
 #include "applu.h"
 
-#define PFDEBUG
+#define WITH_POSIT_32
+//#define PFDEBUG
 
 #ifdef PFDEBUG
 #include <stdio.h>
@@ -63,6 +64,18 @@ uint32_t posit_two = 0x48000000;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x40000000;
 uint32_t posit_two = 0x44000000;
+uint32_t posit_three = 0x46000000;
+uint32_t posit_four = 0x48000000;
+uint32_t posit_five = 0x49000000;
+uint32_t posit_six = 0x4a000000;
+uint32_t posit_ten = 0x4d000000;
+uint32_t posit_hundred = 0x5a400000;
+uint32_t posit_thousand = 0x63e80000;
+uint32_t posit_01 = 0x251eb851;
+uint32_t posit_001 = 0x1c0c49ba;
+uint32_t posit_0001 = 0x1546dc5d;
+uint32_t posit_00001 = 0xf4f8b58;
+uint32_t posit_e__8 = 0x6abcc77;
 #elif (defined WITH_POSIT_16)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
@@ -100,7 +113,7 @@ void init_constants() {
 	*((uint32_t*)&ten) = posit_ten;
 	*((uint32_t*)&hundred) = posit_hundred;
 	*((uint32_t*)&c_epsilon) = posit_001;
-	*((uint32_t*)&c_dtref) = posit_01;
+	*((uint32_t*)&c_e__8) = posit_e__8;
 #else
 	*((uint32_t*)&zero) = fp32_zero;
 	*((uint32_t*)&one) = fp32_one;
@@ -111,7 +124,7 @@ void init_constants() {
 	*((uint32_t*)&six) = fp32_six;
 	*((uint32_t*)&ten) = fp32_ten;
 	*((uint32_t*)&hundred) = fp32_hundred;
-	*((uint32_t*)&c_epsilon) = fp32_01;
+	*((uint32_t*)&c_epsilon) = fp32_001;
 	*((uint32_t*)&c_e__8) = fp32_e__8;
 #endif /* WITH_POSIT */
 }
@@ -3361,27 +3374,45 @@ c   tolerance level
 c   Reference values of RMS-norms of residual, for the (12X12X12) grid,
 c   after 50 time steps, with  DT = 5.0d-01
 --------------------------------------------------------------------*/
+#ifdef WITH_POSIT_32
+    *((uint32_t*)&xcrref[0]) = 0x2825718c;
+    *((uint32_t*)&xcrref[1]) = 0x1e401b70;
+    *((uint32_t*)&xcrref[2]) = 0x1d1bdd8a;
+    *((uint32_t*)&xcrref[3]) = 0x1d13fbaa;
+    *((uint32_t*)&xcrref[4]) = 0x2c62c3e0;
+#else
     xcrref[0] = 1.6196343210976702e-02;
     xcrref[1] = 2.1976745164821318e-03;
     xcrref[2] = 1.5179927653399185e-03;
     xcrref[3] = 1.5029584435994323e-03;
     xcrref[4] = 3.4264073155896461e-02;
-
+#endif
 /*--------------------------------------------------------------------
 c   Reference values of RMS-norms of solution error, for the (12X12X12) grid,
 c   after 50 time steps, with  DT = 5.0d-01
 --------------------------------------------------------------------*/
+#ifdef WITH_POSIT_32
+    *((uint32_t*)&xceref[0]) = 0x1aa16e29;
+    *((uint32_t*)&xceref[1]) = 0x14c1da99;
+    *((uint32_t*)&xceref[2]) = 0x13d6f2b3;
+    *((uint32_t*)&xceref[3]) = 0x13d508df;
+    *((uint32_t*)&xceref[4]) = 0x1caefe28;
+#else
     xceref[0] = 6.4223319957960924e-04;
     xceref[1] = 8.4144342047347926e-05;
     xceref[2] = 5.8588269616485186e-05;
     xceref[3] = 5.8474222595157350e-05;
     xceref[4] = 1.3103347914111294e-03;
-
+#endif
 /*--------------------------------------------------------------------
 c   Reference value of surface integral, for the (12X12X12) grid,
 c   after 50 time steps, with DT = 5.0d-01
 --------------------------------------------------------------------*/
+#ifdef WITH_POSIT_32
+    *((uint32_t*)&xciref) = 0x4bd7864a;
+#else
     xciref = 7.8418928865937083;
+#endif
   }
 
 /*

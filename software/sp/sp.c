@@ -40,7 +40,8 @@
 
 #include "../common/perf.h"
 
-#define PFDEBUG
+#define WITH_POSIT_32
+// #define PFDEBUG
 
 #ifdef PFDEBUG
 #include <stdio.h>
@@ -61,6 +62,17 @@ uint32_t posit_two = 0x48000000;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x40000000;
 uint32_t posit_two = 0x44000000;
+uint32_t posit_three = 0x46000000;
+uint32_t posit_four = 0x48000000;
+uint32_t posit_five = 0x49000000;
+uint32_t posit_six = 0x4a000000;
+uint32_t posit_ten = 0x4d000000;
+uint32_t posit_hundred = 0x5a400000;
+uint32_t posit_thousand = 0x63e80000;
+uint32_t posit_01 = 0x251eb851;
+uint32_t posit_001 = 0x1c0c49ba;
+uint32_t posit_0001 = 0x1546dc5d;
+uint32_t posit_00001 = 0xf4f8b58;
 #elif (defined WITH_POSIT_16)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
@@ -98,7 +110,7 @@ void init_constants() {
 	*((uint32_t*)&ten) = posit_ten;
 	*((uint32_t*)&hundred) = posit_hundred;
 	*((uint32_t*)&thousand) = posit_thousand;
-	*((uint32_t*)&c_epsilon) = posit_001;
+	*((uint32_t*)&c_epsilon) = posit_01;
 	*((uint32_t*)&c_dtref) = posit_01;
 #else
 	*((uint32_t*)&zero) = fp32_zero;
@@ -111,7 +123,7 @@ void init_constants() {
 	*((uint32_t*)&ten) = fp32_ten;
 	*((uint32_t*)&hundred) = fp32_hundred;
 	*((uint32_t*)&thousand) = fp32_thousand;
-	*((uint32_t*)&c_epsilon) = fp32_01;
+	*((uint32_t*)&c_epsilon) = fp32_001;
 	*((uint32_t*)&c_dtref) = fp32_01;
 #endif /* WITH_POSIT */
 }
@@ -2184,20 +2196,35 @@ c    reference data for 12X12X12 grids after 100 time steps, with DT = 1.50d-02
 		/*--------------------------------------------------------------------
 c    Reference values of RMS-norms of residual.
 --------------------------------------------------------------------*/
+#ifdef WITH_POSIT_32
+		*((uint32_t*)&xcrref[0]) = 0x2b084b6a;
+		*((uint32_t*)&xcrref[1]) = 0x254e00f8;
+		*((uint32_t*)&xcrref[2]) = 0x2828069a;
+		*((uint32_t*)&xcrref[3]) = 0x280e2073;
+		*((uint32_t*)&xcrref[4]) = 0x2c75eef0;
+#else
 		xcrref[0] = 2.7470315451339479e-02;
 		xcrref[1] = 1.0360746705285417e-02;
 		xcrref[2] = 1.6235745065095532e-02;
 		xcrref[3] = 1.5840557224455615e-02;
 		xcrref[4] = 3.4849040609362460e-02;
-
+#endif
 		/*--------------------------------------------------------------------
 c    Reference values of RMS-norms of solution error.
 --------------------------------------------------------------------*/
+#ifdef WITH_POSIT_32
+		*((uint32_t*)&xceref[0]) = 0x1193acf2;
+		*((uint32_t*)&xceref[1]) = 0xf5bc5eb;
+		*((uint32_t*)&xceref[2]) = 0x101e10a9;
+		*((uint32_t*)&xceref[3]) = 0x10108186;
+		*((uint32_t*)&xceref[4]) = 0x123d67f5;
+#else
 		xceref[0] = 2.7289258557377227e-05;
 		xceref[1] = 1.0364446640837285e-05;
 		xceref[2] = 1.6154798287166471e-05;
 		xceref[3] = 1.5750704994480102e-05;
 		xceref[4] = 3.4177666183390531e-05;
+#endif
 	}
 		/*
 //--------------------------------------------------------------------

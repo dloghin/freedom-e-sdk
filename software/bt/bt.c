@@ -41,7 +41,8 @@
 
 #include "../common/perf.h"
 
-#define PFDEBUG
+#define WITH_POSIT_32
+// #define PFDEBUG
 
 #ifdef PFDEBUG
 #include <stdio.h>
@@ -62,6 +63,18 @@ uint32_t posit_two = 0x48000000;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x40000000;
 uint32_t posit_two = 0x44000000;
+uint32_t posit_three = 0x46000000;
+uint32_t posit_four = 0x48000000;
+uint32_t posit_five = 0x49000000;
+uint32_t posit_six = 0x4a000000;
+uint32_t posit_ten = 0x4d000000;
+uint32_t posit_hundred = 0x5a400000;
+uint32_t posit_thousand = 0x63e80000;
+uint32_t posit_1 = 0x32666666;
+uint32_t posit_01 = 0x251eb851;
+uint32_t posit_001 = 0x1c0c49ba;
+uint32_t posit_0001 = 0x1546dc5d;
+uint32_t posit_00001 = 0xf4f8b58;
 #elif (defined WITH_POSIT_16)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
@@ -97,7 +110,7 @@ void init_constants() {
 	*((uint32_t*)&six) = posit_six;
 	*((uint32_t*)&ten) = posit_ten;
 	*((uint32_t*)&hundred) = posit_hundred;
-	*((uint32_t*)&c_epsilon) = posit_001;
+	*((uint32_t*)&c_epsilon) = posit_1;
 	*((uint32_t*)&c_dtref) = posit_01;
 #else
 	*((uint32_t*)&zero) = fp32_zero;
@@ -336,8 +349,11 @@ c-------------------------------------------------------------------*/
 		for (d = 0; d <= 2; d++) {
 			rms[m] = rms[m] / (element_t)(grid_points[d]-2);
 		}
+	}
+	for (m = 0; m < 5; m++) {
 		rms[m] = sqrt_asm(rms[m]);
 	}
+	m = 1;
 }
 
 /*--------------------------------------------------------------------

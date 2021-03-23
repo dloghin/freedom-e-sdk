@@ -8,6 +8,8 @@
 #include <stdint.h>
 #include "../common/perf.h"
 
+#define PFDEBUG
+
 #ifdef PFDEBUG
 #include <stdio.h>
 #endif
