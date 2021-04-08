@@ -40,7 +40,7 @@
 
 #include "../common/perf.h"
 
-#define WITH_POSIT_32
+// #define WITH_POSIT_32
 // #define PFDEBUG
 
 #ifdef PFDEBUG
@@ -77,10 +77,32 @@ uint32_t posit_00001 = 0xf4f8b58;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
 uint32_t posit_two = 0x00004800;
+uint32_t posit_three = 0x00004c00;
+uint32_t posit_four = 0x00005000;
+uint32_t posit_five = 0x00005200;
+uint32_t posit_six = 0x00005400;
+uint32_t posit_ten = 0x00005a00;
+uint32_t posit_hundred = 0x00006a40;
+uint32_t posit_thousand = 0x000073e8;
+uint32_t posit_1 = 0x000024cc;
+uint32_t posit_01 = 0x0000151e;
+uint32_t posit_001 = 0x00000c0c;
+uint32_t posit_0001 = 0x000006a3;
+uint32_t posit_00001 = 0x000003a7;
 #elif (defined WITH_POSIT_8)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00000040;
 uint32_t posit_two = 0x00000050;
+uint32_t posit_three = 0x00000058;
+uint32_t posit_four = 0x00000060;
+uint32_t posit_five = 0x00000062;
+uint32_t posit_six = 0x00000064;
+uint32_t posit_ten = 0x0000006a;
+uint32_t posit_hundred = 0x00000079;
+uint32_t posit_thousand = 0x0000007d;
+uint32_t posit_1 = 0x00000014;
+uint32_t posit_01 = 0x00000006;
+uint32_t posit_001 = 0x00000002;
 #else
 uint32_t fp32_zero = 0x00000000;
 uint32_t fp32_one = 0x3f800000;
@@ -110,7 +132,7 @@ void init_constants() {
 	*((uint32_t*)&ten) = posit_ten;
 	*((uint32_t*)&hundred) = posit_hundred;
 	*((uint32_t*)&thousand) = posit_thousand;
-	*((uint32_t*)&c_epsilon) = posit_01;
+	*((uint32_t*)&c_epsilon) = one;
 	*((uint32_t*)&c_dtref) = posit_01;
 #else
 	*((uint32_t*)&zero) = fp32_zero;
@@ -123,7 +145,7 @@ void init_constants() {
 	*((uint32_t*)&ten) = fp32_ten;
 	*((uint32_t*)&hundred) = fp32_hundred;
 	*((uint32_t*)&thousand) = fp32_thousand;
-	*((uint32_t*)&c_epsilon) = fp32_001;
+	*((uint32_t*)&c_epsilon) = fp32_0001;
 	*((uint32_t*)&c_dtref) = fp32_01;
 #endif /* WITH_POSIT */
 }
@@ -2486,7 +2508,7 @@ c      perform the Thomas algorithm; first, FORWARD ELIMINATION
 #pragma omp for
 				for (j = 1; j <= grid_points[1]-2; j++) {
 					for (k = 1; k <= grid_points[2]-2; k++) {
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						for (m = 0; m < 3; m++) {
@@ -2541,7 +2563,7 @@ c      elimination of off-diagonal entries
 					/*--------------------------------------------------------------------
 c            scale the last row immediately 
 --------------------------------------------------------------------*/
-					fac2               = 1./lhs[n+2][i1][j][k];
+					fac2               = one/lhs[n+2][i1][j][k];
 					for (m = 0; m < 3; m++) {
 						rhs[m][i1][j][k] = fac2*rhs[m][i1][j][k];
 					}
@@ -2560,7 +2582,7 @@ c      do the u+c and the u-c factors
 #pragma omp for
 					for (j = 1; j <= grid_points[1]-2; j++) {
 						for (k = 1; k <= grid_points[2]-2; k++) {
-							fac1               = 1./lhs[n+2][i][j][k];
+							fac1               = one/lhs[n+2][i][j][k];
 							lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 							lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 							rhs[m][i][j][k] = fac1*rhs[m][i][j][k];
@@ -2589,7 +2611,7 @@ c         And again the last two rows separately
 #pragma omp for
 				for (j = 1; j <= grid_points[1]-2; j++) {
 					for (k = 1; k <= grid_points[2]-2; k++) {
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						rhs[m][i][j][k]     = fac1*rhs[m][i][j][k];
@@ -2602,7 +2624,7 @@ c         And again the last two rows separately
 						/*--------------------------------------------------------------------
 c               Scale the last row immediately
 --------------------------------------------------------------------*/
-						fac2               = 1./lhs[n+2][i1][j][k];
+						fac2               = one/lhs[n+2][i1][j][k];
 						rhs[m][i1][j][k]   = fac2*rhs[m][i1][j][k];
 
 					}
@@ -2717,7 +2739,7 @@ c                          FORWARD ELIMINATION
 #pragma omp for      
 				for (i = 1; i <= grid_points[0]-2; i++) {
 					for (k = 1; k <= grid_points[2]-2; k++) {
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						for (m = 0; m < 3; m++) {
@@ -2754,7 +2776,7 @@ c      elimination of off-diagonal entries
 #pragma omp for      
 			for (i = 1; i <= grid_points[0]-2; i++) {
 				for (k = 1; k <= grid_points[2]-2; k++) {
-					fac1               = 1./lhs[n+2][i][j][k];
+					fac1               = one/lhs[n+2][i][j][k];
 					lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 					lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 					for (m = 0; m < 3; m++) {
@@ -2771,7 +2793,7 @@ c      elimination of off-diagonal entries
 					/*--------------------------------------------------------------------
 c            scale the last row immediately 
 --------------------------------------------------------------------*/
-					fac2               = 1./lhs[n+2][i][j1][k];
+					fac2               = one/lhs[n+2][i][j1][k];
 					for (m = 0; m < 3; m++) {
 						rhs[m][i][j1][k] = fac2*rhs[m][i][j1][k];
 					}
@@ -2789,7 +2811,7 @@ c      do the u+c and the u-c factors
 #pragma omp for      
 					for (i = 1; i <= grid_points[0]-2; i++) {
 						for (k = 1; k <= grid_points[2]-2; k++) {
-							fac1               = 1./lhs[n+2][i][j][k];
+							fac1               = one/lhs[n+2][i][j][k];
 							lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 							lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 							rhs[m][i][j][k] = fac1*rhs[m][i][j][k];
@@ -2817,7 +2839,7 @@ c         And again the last two rows separately
 #pragma omp for      
 				for (i = 1; i <= grid_points[0]-2; i++) {
 					for (k = 1; k <= grid_points[2]-2; k++) {
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						rhs[m][i][j][k]     = fac1*rhs[m][i][j][k];
@@ -2830,7 +2852,7 @@ c         And again the last two rows separately
 						/*--------------------------------------------------------------------
 c               Scale the last row immediately 
 --------------------------------------------------------------------*/
-						fac2               = 1./lhs[n+2][i][j1][k];
+						fac2               = one/lhs[n+2][i][j1][k];
 						rhs[m][i][j1][k]   = fac2*rhs[m][i][j1][k];
 					}
 				}
@@ -2942,7 +2964,7 @@ c-------------------------------------------------------------------*/
 					for (k = 0; k <= grid_points[2]-3; k++) {
 						k1 = k  + 1;
 						k2 = k  + 2;
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						for (m = 0; m < 3; m++) {
@@ -2978,7 +3000,7 @@ c-------------------------------------------------------------------*/
 #pragma omp for
 			for (i = 1; i <= grid_points[0]-2; i++) {
 				for (j = 1; j <= grid_points[1]-2; j++) {
-					fac1               = 1./lhs[n+2][i][j][k];
+					fac1               = one/lhs[n+2][i][j][k];
 					lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 					lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 					for (m = 0; m < 3; m++) {
@@ -2996,7 +3018,7 @@ c-------------------------------------------------------------------*/
 					/*--------------------------------------------------------------------
 c               scale the last row immediately
 c-------------------------------------------------------------------*/
-					fac2               = 1./lhs[n+2][i][j][k1];
+					fac2               = one/lhs[n+2][i][j][k1];
 					for (m = 0; m < 3; m++) {
 						rhs[m][i][j][k1] = fac2*rhs[m][i][j][k1];
 					}
@@ -3014,7 +3036,7 @@ c-------------------------------------------------------------------*/
 						for (k = 0; k <= grid_points[2]-3; k++) {
 							k1 = k  + 1;
 							k2 = k  + 2;
-							fac1               = 1./lhs[n+2][i][j][k];
+							fac1               = one/lhs[n+2][i][j][k];
 							lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 							lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 							rhs[m][i][j][k] = fac1*rhs[m][i][j][k];
@@ -3042,7 +3064,7 @@ c-------------------------------------------------------------------*/
 #pragma omp for
 				for (i = 1; i <= grid_points[0]-2; i++) {
 					for (j = 1; j <= grid_points[1]-2; j++) {
-						fac1               = 1./lhs[n+2][i][j][k];
+						fac1               = one/lhs[n+2][i][j][k];
 						lhs[n+3][i][j][k]   = fac1*lhs[n+3][i][j][k];
 						lhs[n+4][i][j][k]   = fac1*lhs[n+4][i][j][k];
 						rhs[m][i][j][k]     = fac1*rhs[m][i][j][k];
@@ -3056,7 +3078,7 @@ c-------------------------------------------------------------------*/
 c               Scale the last row immediately (some of this is overkill
 c               if this is the last cell)
 c-------------------------------------------------------------------*/
-						fac2               = 1./lhs[n+2][i][j][k1];
+						fac2               = one/lhs[n+2][i][j][k1];
 						rhs[m][i][j][k1]   = fac2*rhs[m][i][j][k1];
 
 					}

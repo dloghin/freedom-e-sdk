@@ -1,9 +1,9 @@
 /*--------------------------------------------------------------------
-
+  
   NAS Parallel Benchmarks 3.0 structured OpenMP C versions - BT
 
   This benchmark is an OpenMP C version of the NPB BT code.
-
+  
   The OpenMP C 2.3 versions are derived by RWCP from the serial Fortran versions 
   in "NPB 2.3-serial" developed by NAS. 3.0 translation is performed by the UVSQ. 
 
@@ -14,9 +14,9 @@
   Information on OpenMP activities at RWCP is available at:
 
            http://pdplab.trc.rwcp.or.jp/pdperf/Omni/
-
+  
   Information on NAS Parallel Benchmarks 2.3 is available at:
-
+  
            http://www.nas.nasa.gov/NAS/NPB/
 
 --------------------------------------------------------------------*/
@@ -29,10 +29,10 @@
   OpenMP C version: S. Satoh
 
   3.0 structure translation: M. Popov
-
+  
 --------------------------------------------------------------------*/
 
-// https://github.com/benchmark-subsetting/NPB3.0-omp-C
+// https://github.com/benchmark-subsetting/NPB3-0-omp-C
 
 /* global variables */
 #include "header.h"
@@ -41,7 +41,7 @@
 
 #include "../common/perf.h"
 
-#define WITH_POSIT_32
+// #define WITH_POSIT_32
 // #define PFDEBUG
 
 #ifdef PFDEBUG
@@ -79,10 +79,32 @@ uint32_t posit_00001 = 0xf4f8b58;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
 uint32_t posit_two = 0x00004800;
+uint32_t posit_three = 0x00004c00;
+uint32_t posit_four = 0x00005000;
+uint32_t posit_five = 0x00005200;
+uint32_t posit_six = 0x00005400;
+uint32_t posit_ten = 0x00005a00;
+uint32_t posit_hundred = 0x00006a40;
+uint32_t posit_thousand = 0x000073e8;
+uint32_t posit_1 = 0x000024cc;
+uint32_t posit_01 = 0x0000151e;
+uint32_t posit_001 = 0x00000c0c;
+uint32_t posit_0001 = 0x000006a3;
+uint32_t posit_00001 = 0x000003a7;
 #elif (defined WITH_POSIT_8)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00000040;
 uint32_t posit_two = 0x00000050;
+uint32_t posit_three = 0x00000058;
+uint32_t posit_four = 0x00000060;
+uint32_t posit_five = 0x00000062;
+uint32_t posit_six = 0x00000064;
+uint32_t posit_ten = 0x0000006a;
+uint32_t posit_hundred = 0x00000079;
+uint32_t posit_thousand = 0x0000007d;
+uint32_t posit_1 = 0x00000014;
+uint32_t posit_01 = 0x00000006;
+uint32_t posit_001 = 0x00000002;
 #else
 uint32_t fp32_zero = 0x00000000;
 uint32_t fp32_one = 0x3f800000;
@@ -122,7 +144,7 @@ void init_constants() {
 	*((uint32_t*)&six) = fp32_six;
 	*((uint32_t*)&ten) = fp32_ten;
 	*((uint32_t*)&hundred) = fp32_hundred;
-	*((uint32_t*)&c_epsilon) = fp32_001;
+	*((uint32_t*)&c_epsilon) = fp32_00001;
 	*((uint32_t*)&c_dtref) = fp32_01;
 #endif /* WITH_POSIT */
 }
@@ -345,15 +367,12 @@ c-------------------------------------------------------------------*/
 		}
 	}
 
-	for (m = 0; m < 5; m++) {
-		for (d = 0; d <= 2; d++) {
-			rms[m] = rms[m] / (element_t)(grid_points[d]-2);
-		}
-	}
-	for (m = 0; m < 5; m++) {
-		rms[m] = sqrt_asm(rms[m]);
-	}
-	m = 1;
+  for (m = 0; m < 5; m++) {
+    for (d = 0; d <= 2; d++) {
+      rms[m] = rms[m] / (element_t)(grid_points[d]-2);
+    }
+    rms[m] = sqrt_asm(rms[m]);
+  }
 }
 
 /*--------------------------------------------------------------------
@@ -932,7 +951,7 @@ c-------------------------------------------------------------------*/
 			}
 		}
 
-		/*--------------------------------------------------------------------
+/*--------------------------------------------------------------------
 c     top face     
 c-------------------------------------------------------------------*/
 		k = grid_points[2]-1;
@@ -2031,7 +2050,7 @@ c-------------------------------------------------------------------*/
 		for (k = 1; k < grid_points[2]-1; k++) {
 			for (m = 0; m < 5; m++) {
 				rhs[i][j][k][m] = rhs[i][j][k][m] - dssp *
-						( u[i-2][j][k][m] - 4.*u[i-1][j][k][m] +
+						( u[i-2][j][k][m] - four*u[i-1][j][k][m] +
 								five*u[i][j][k][m] );
 			}
 		}
@@ -2151,8 +2170,8 @@ c-------------------------------------------------------------------*/
 		for (k = 1; k < grid_points[2]-1; k++) {
 			for (m = 0; m < 5; m++) {
 				rhs[i][j][k][m] = rhs[i][j][k][m] - dssp *
-						( u[i][j-2][k][m] - 4.*u[i][j-1][k][m] +
-								5.*u[i][j][k][m] );
+						( u[i][j-2][k][m] - four*u[i][j-1][k][m] +
+								five*u[i][j][k][m] );
 			}
 		}
 	}
@@ -2550,7 +2569,17 @@ c-------------------------------------------------------------------*/
 		*((uint32_t*)&xcrref[3]) = 0x2ac4898c;
 		*((uint32_t*)&xcrref[4]) = 0x3625d450;
 #elif (defined WITH_POSIT_16)
+		*((uint32_t*)&xcrref[0]) = 0x2ae6;
+		*((uint32_t*)&xcrref[1]) = 0x16a4;
+		*((uint32_t*)&xcrref[2]) = 0x1c29;
+		*((uint32_t*)&xcrref[3]) = 0x1ac4;
+		*((uint32_t*)&xcrref[4]) = 0x2c4b;
 #elif (defined WITH_POSIT_8)
+		*((uint32_t*)&xcrref[0]) = 0x1a;
+		*((uint32_t*)&xcrref[1]) = 0x7;
+		*((uint32_t*)&xcrref[2]) = 0xc;
+		*((uint32_t*)&xcrref[3]) = 0xa;
+		*((uint32_t*)&xcrref[4]) = 0x1c;
 #else
 		xcrref[0] = 1.7034283709541311e-01;
 		xcrref[1] = 1.2975252070034097e-02;
@@ -2569,7 +2598,17 @@ c-------------------------------------------------------------------*/
 		*((uint32_t*)&xceref[3]) = 0x146b41e7;
 		*((uint32_t*)&xceref[4]) = 0x1ba80f57;
 #elif (defined WITH_POSIT_16)
+		*((uint32_t*)&xceref[0]) = 0xa0c;
+		*((uint32_t*)&xceref[1]) = 0x57b;
+		*((uint32_t*)&xceref[2]) = 0x636;
+		*((uint32_t*)&xceref[3]) = 0x635;
+		*((uint32_t*)&xceref[4]) = 0xba8;
 #elif (defined WITH_POSIT_8)
+		*((uint32_t*)&xceref[0]) = 0x1;
+		*((uint32_t*)&xceref[1]) = 0x1;
+		*((uint32_t*)&xceref[2]) = 0x1;
+		*((uint32_t*)&xceref[3]) = 0x1;
+		*((uint32_t*)&xceref[4]) = 0x1;
 #else
 		xceref[0] = 4.9976913345811579e-04;
 		xceref[1] = 4.5195666782961927e-05;

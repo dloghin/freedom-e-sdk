@@ -42,7 +42,7 @@
 
 #include "applu.h"
 
-#define WITH_POSIT_32
+//#define WITH_POSIT_32
 //#define PFDEBUG
 
 #ifdef PFDEBUG
@@ -80,10 +80,34 @@ uint32_t posit_e__8 = 0x6abcc77;
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00004000;
 uint32_t posit_two = 0x00004800;
+uint32_t posit_three = 0x00004c00;
+uint32_t posit_four = 0x00005000;
+uint32_t posit_five = 0x00005200;
+uint32_t posit_six = 0x00005400;
+uint32_t posit_ten = 0x00005a00;
+uint32_t posit_hundred = 0x00006a40;
+uint32_t posit_thousand = 0x000073e8;
+uint32_t posit_1 = 0x000024cc;
+uint32_t posit_01 = 0x0000151e;
+uint32_t posit_001 = 0x00000c0c;
+uint32_t posit_0001 = 0x000006a3;
+uint32_t posit_00001 = 0x000003a7;
+uint32_t posit_e__8 = 0xaa;
 #elif (defined WITH_POSIT_8)
 uint32_t posit_zero = 0x00000000;
 uint32_t posit_one = 0x00000040;
 uint32_t posit_two = 0x00000050;
+uint32_t posit_three = 0x00000058;
+uint32_t posit_four = 0x00000060;
+uint32_t posit_five = 0x00000062;
+uint32_t posit_six = 0x00000064;
+uint32_t posit_ten = 0x0000006a;
+uint32_t posit_hundred = 0x00000079;
+uint32_t posit_thousand = 0x0000007d;
+uint32_t posit_1 = 0x00000014;
+uint32_t posit_01 = 0x00000006;
+uint32_t posit_001 = 0x00000002;
+uint32_t posit_e__8 = 0x00000002;
 #else
 uint32_t fp32_zero = 0x00000000;
 uint32_t fp32_one = 0x3f800000;
@@ -112,7 +136,7 @@ void init_constants() {
 	*((uint32_t*)&six) = posit_six;
 	*((uint32_t*)&ten) = posit_ten;
 	*((uint32_t*)&hundred) = posit_hundred;
-	*((uint32_t*)&c_epsilon) = posit_001;
+	*((uint32_t*)&c_epsilon) = posit_1;
 	*((uint32_t*)&c_e__8) = posit_e__8;
 #else
 	*((uint32_t*)&zero) = fp32_zero;
@@ -124,7 +148,7 @@ void init_constants() {
 	*((uint32_t*)&six) = fp32_six;
 	*((uint32_t*)&ten) = fp32_ten;
 	*((uint32_t*)&hundred) = fp32_hundred;
-	*((uint32_t*)&c_epsilon) = fp32_001;
+	*((uint32_t*)&c_epsilon) = fp32_01;
 	*((uint32_t*)&c_e__8) = fp32_e__8;
 #endif /* WITH_POSIT */
 }
@@ -137,7 +161,7 @@ c   omega = 2.0 is correct for all classes
 c   tolrsd is tolerance levels for steady state residuals
 c-------------------------------------------------------------------*/
 
-#define IPR_DEFAULT	1
+#define IPR_DEFAULT	0
 #define	OMEGA_DEFAULT	(one + two/ten)
 
 #define	TOLRSD1_DEF	c_e__8
@@ -304,10 +328,10 @@ c   verification test
   verify ( rsdnm, errnm, frc, &class, &verified );
 
   unsigned long long endc = read_cycles();
-  	endc = endc - startc;
-  #ifdef PFDEBUG
-  	printf("Cycles %lu\n", endc);
-  #endif
+  endc = endc - startc;
+#ifdef PFDEBUG
+  printf("Cycles %lu\n", endc);
+#endif
 
 #ifdef PFDEBUG
 	if (verified)
@@ -974,7 +998,7 @@ c   xi-direction flux differences
 	  ( u21i - u21im1 );
 	flux[i][j][k][2] = tx3 * ( u31i - u31im1 );
 	flux[i][j][k][3] = tx3 * ( u41i - u41im1 );
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * tx3 * ( ( u21i * u21i + u31i * u31i + u41i * u41i )
 		    - ( u21im1*u21im1 + u31im1*u31im1 + u41im1*u41im1 ) )
 	  + (one/six)
@@ -1064,7 +1088,7 @@ c   eta-direction flux differences
       for (k = 1; k <= nz - 2; k++) {
 	flux[i][j][k][0] = rsd[i][j][k][2];
 	u31 = rsd[i][j][k][2] / rsd[i][j][k][0];
-	q = one/two * (  rsd[i][j][k][1] * rsd[i][j][k][1]
+	q = (one/two) * (  rsd[i][j][k][1] * rsd[i][j][k][1]
 		      + rsd[i][j][k][2] * rsd[i][j][k][2]
 		      + rsd[i][j][k][3] * rsd[i][j][k][3] )
 	  / rsd[i][j][k][0];
@@ -1105,7 +1129,7 @@ c   eta-direction flux differences
 	flux[i][j][k][2] = (four/three) * ty3 *
 	  ( u31j - u31jm1 );
 	flux[i][j][k][3] = ty3 * ( u41j - u41jm1 );
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * ty3 * ( ( u21j  *u21j + u31j  *u31j + u41j  *u41j )
 		    - ( u21jm1*u21jm1 + u31jm1*u31jm1 + u41jm1*u41jm1 ) )
 	  + (one/six)
@@ -1193,7 +1217,7 @@ c   zeta-direction flux differences
       for (k = 0; k <= nz-1; k++) {
 	flux[i][j][k][0] = rsd[i][j][k][3];
 	u41 = rsd[i][j][k][3] / rsd[i][j][k][0];
-	q = one/two * (  rsd[i][j][k][1] * rsd[i][j][k][1]
+	q = (one/two) * (  rsd[i][j][k][1] * rsd[i][j][k][1]
 		      + rsd[i][j][k][2] * rsd[i][j][k][2]
 		      + rsd[i][j][k][3] * rsd[i][j][k][3] )
 	  / rsd[i][j][k][0];
@@ -1229,7 +1253,7 @@ c   zeta-direction flux differences
 	flux[i][j][k][2] = tz3 * ( u31k - u31km1 );
 	flux[i][j][k][3] = (four/three) * tz3 * ( u41k
 					    - u41km1 );
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * tz3 * ( ( u21k  *u21k + u31k  *u31k + u41k  *u41k )
 		    - ( u21km1*u21km1 + u31km1*u31km1 + u41km1*u41km1 ) )
 	  + (one/six)
@@ -1543,7 +1567,7 @@ c   form the first block sub-diagonal
 
       a[i][j][3][0] = - dt * tz2
 	* ( - ( u[i][j][k-1][3] * tmp1 ) *( u[i][j][k-1][3] * tmp1 )
-	    + one/two * C2
+	    + (one/two) * C2
 	    * ( ( u[i][j][k-1][1] * u[i][j][k-1][1]
 		  + u[i][j][k-1][2] * u[i][j][k-1][2]
 		  + u[i][j][k-1][3] * u[i][j][k-1][3] ) * tmp2 ) )
@@ -1577,7 +1601,7 @@ c   form the first block sub-diagonal
 	- dt * tz1 * ( c34 - c1345 ) * tmp2 * u[i][j][k-1][2];
       a[i][j][4][3] = - dt * tz2
 	* ( C1 * ( u[i][j][k-1][4] * tmp1 )
-            - one/two * C2
+            - (one/two) * C2
             * ( (  u[i][j][k-1][1]*u[i][j][k-1][1]
 		   + u[i][j][k-1][2]*u[i][j][k-1][2]
 		   + three*u[i][j][k-1][3]*u[i][j][k-1][3] ) * tmp2 ) )
@@ -1654,7 +1678,7 @@ c   form the second block sub-diagonal
 	* ( c34 - c1345 ) * tmp2 * u[i][j-1][k][1];
       b[i][j][4][2] = - dt * ty2
 	* ( C1 * ( u[i][j-1][k][4] * tmp1 )
-	    - one/two * C2
+	    - (one/two) * C2
 	    * ( (  u[i][j-1][k][1]*u[i][j-1][k][1]
                    + three * u[i][j-1][k][2]*u[i][j-1][k][2]
 		   + u[i][j-1][k][3]*u[i][j-1][k][3] ) * tmp2 ) )
@@ -1683,7 +1707,7 @@ c   form the third block sub-diagonal
 
       c[i][j][1][0] = - dt * tx2
 	* ( - ( u[i-1][j][k][1] * tmp1 ) *( u[i-1][j][k][1] * tmp1 )
-	    + C2 * one/two * (  u[i-1][j][k][1] * u[i-1][j][k][1]
+	    + C2 * (one/two) * (  u[i-1][j][k][1] * u[i-1][j][k][1]
                              + u[i-1][j][k][2] * u[i-1][j][k][2]
                              + u[i-1][j][k][3] * u[i-1][j][k][3] ) * tmp2 )
 	- dt * tx1 * ( - r43 * c34 * tmp2 * u[i-1][j][k][1] );
@@ -1730,7 +1754,7 @@ c   form the third block sub-diagonal
 	    - c1345 * tmp2 * u[i-1][j][k][4] );
       c[i][j][4][1] = - dt * tx2
 	* ( C1 * ( u[i-1][j][k][4] * tmp1 )
-	    - one/two * C2
+	    - (one/two) * C2
 	    * ( (  three*u[i-1][j][k][1]*u[i-1][j][k][1]
 		   + u[i-1][j][k][2]*u[i-1][j][k][2]
 		   + u[i-1][j][k][3]*u[i-1][j][k][3] ) * tmp2 ) )
@@ -1896,7 +1920,7 @@ c   form the first block sub-diagonal
 
       a[i][j][1][0] =  dt * tx2
 	* ( - ( u[i+1][j][k][1] * tmp1 ) *( u[i+1][j][k][1] * tmp1 )
-	    + C2 * one/two * (  u[i+1][j][k][1] * u[i+1][j][k][1]
+	    + C2 * (one/two) * (  u[i+1][j][k][1] * u[i+1][j][k][1]
                              + u[i+1][j][k][2] * u[i+1][j][k][2]
                              + u[i+1][j][k][3] * u[i+1][j][k][3] ) * tmp2 )
 	- dt * tx1 * ( - r43 * c34 * tmp2 * u[i+1][j][k][1] );
@@ -1943,7 +1967,7 @@ c   form the first block sub-diagonal
 	    - c1345 * tmp2 * u[i+1][j][k][4] );
       a[i][j][4][1] = dt * tx2
 	* ( C1 * ( u[i+1][j][k][4] * tmp1 )
-	    - one/two * C2
+	    - (one/two) * C2
 	    * ( (  three*u[i+1][j][k][1]*u[i+1][j][k][1]
 		   + u[i+1][j][k][2]*u[i+1][j][k][2]
 		   + u[i+1][j][k][3]*u[i+1][j][k][3] ) * tmp2 ) )
@@ -1987,7 +2011,7 @@ c   form the second block sub-diagonal
 
       b[i][j][2][0] =  dt * ty2
 	* ( - ( u[i][j+1][k][2] * tmp1 ) *( u[i][j+1][k][2] * tmp1 )
-	    + one/two * C2 * ( (  u[i][j+1][k][1] * u[i][j+1][k][1]
+	    + (one/two) * C2 * ( (  u[i][j+1][k][1] * u[i][j+1][k][1]
 			       + u[i][j+1][k][2] * u[i][j+1][k][2]
 			       + u[i][j+1][k][3] * u[i][j+1][k][3] )
 			    * tmp2 ) )
@@ -2029,7 +2053,7 @@ c   form the second block sub-diagonal
 	* ( c34 - c1345 ) * tmp2 * u[i][j+1][k][1];
       b[i][j][4][2] =  dt * ty2
 	* ( C1 * ( u[i][j+1][k][4] * tmp1 )
-	    - one/two * C2
+	    - (one/two) * C2
 	    * ( (  u[i][j+1][k][1]*u[i][j+1][k][1]
 		   + three * u[i][j+1][k][2]*u[i][j+1][k][2]
 		   + u[i][j+1][k][3]*u[i][j+1][k][3] ) * tmp2 ) )
@@ -2078,7 +2102,7 @@ c   form the third block sub-diagonal
 
       c[i][j][3][0] = dt * tz2
 	* ( - ( u[i][j][k+1][3] * tmp1 ) *( u[i][j][k+1][3] * tmp1 )
-	    + one/two * C2
+	    + (one/two) * C2
 	    * ( ( u[i][j][k+1][1] * u[i][j][k+1][1]
 		  + u[i][j][k+1][2] * u[i][j][k+1][2]
 		  + u[i][j][k+1][3] * u[i][j][k+1][3] ) * tmp2 ) )
@@ -2243,7 +2267,7 @@ c   initialize
       k = ki1;
 
       phi1[i][j] = C2*(  u[i][j][k][4]
-			- one/two * (  pow2(u[i][j][k][1])
+			- (one/two) * (  pow2(u[i][j][k][1])
 				    + pow2(u[i][j][k][2])
 				    + pow2(u[i][j][k][3]) )
 			/ u[i][j][k][0] );
@@ -2251,7 +2275,7 @@ c   initialize
       k = ki2;
 
       phi2[i][j] = C2*(  u[i][j][k][4]
-			- one/two * (  pow2(u[i][j][k][1])
+			- (one/two) * (  pow2(u[i][j][k][1])
 				    + pow2(u[i][j][k][2])
 				    + pow2(u[i][j][k][3]) )
 			/ u[i][j][k][0] );
@@ -2290,7 +2314,7 @@ c   initialize
       iglob = i;
       for (k = ki1; k <= ki2; k++) {
 	phi1[i][k] = C2*(  u[i][jbeg][k][4]
-			  - one/two * (  pow2(u[i][jbeg][k][1])
+			  - (one/two) * (  pow2(u[i][jbeg][k][1])
 				      + pow2(u[i][jbeg][k][2])
 				      + pow2(u[i][jbeg][k][3]) )
 			  / u[i][jbeg][k][0] );
@@ -2304,7 +2328,7 @@ c   initialize
       iglob = i;
       for (k = ki1; k <= ki2; k++) {
 	phi2[i][k] = C2*(  u[i][jfin][k][4]
-			  - one/two * (  pow2(u[i][jfin][k][1])
+			  - (one/two) * (  pow2(u[i][jfin][k][1])
 				      + pow2(u[i][jfin][k][2])
 				      + pow2(u[i][jfin][k][3]) )
 			  / u[i][jfin][k][0] );
@@ -2345,7 +2369,7 @@ c   initialize
       jglob = j;
       for (k = ki1; k <= ki2; k++) {
 	phi1[j][k] = C2*(  u[ibeg][j][k][4]
-			  - one/two * (  pow2(u[ibeg][j][k][1])
+			  - (one/two) * (  pow2(u[ibeg][j][k][1])
 				      + pow2(u[ibeg][j][k][2])
 				      + pow2(u[ibeg][j][k][3]) )
 			  / u[ibeg][j][k][0] );
@@ -2359,7 +2383,7 @@ c   initialize
       jglob = j;
       for (k = ki1; k <= ki2; k++) {
 	phi2[j][k] = C2*(  u[ifin][j][k][4]
-			  - one/two * (  pow2(u[ifin][j][k][1])
+			  - (one/two) * (  pow2(u[ifin][j][k][1])
 				      + pow2(u[ifin][j][k][2])
 				      + pow2(u[ifin][j][k][3]) )
 			  / u[ifin][j][k][0] );
@@ -2383,7 +2407,7 @@ c   initialize
   }
 
   frc3 = deta * dzeta * frc3;
-  frc = one/four * ( frc1 + frc2 + frc3 );
+  frc = (one/four) * ( frc1 + frc2 + frc3 );
 }
 
 /*--------------------------------------------------------------------
@@ -2480,7 +2504,7 @@ c  local variables
     for (j = 0; j <= ny-1; j++) {
       for (k = 0; k <= nz-1; k++) {
 	for (m = 0; m < 5; m++) {
-	  rsd[i][j][k][m] = - frct[i][j][k][m];
+	  rsd[i][j][k][m] = zero - frct[i][j][k][m];
 	}
       }
     }
@@ -2500,7 +2524,7 @@ c   xi-direction flux differences
 	flux[i][j][k][0] = u[i][j][k][1];
 	u21 = u[i][j][k][1] / u[i][j][k][0];
 
-	q = one/two * (  u[i][j][k][1] * u[i][j][k][1]
+	q = (one/two) * (  u[i][j][k][1] * u[i][j][k][1]
 		      + u[i][j][k][2] * u[i][j][k][2]
 		      + u[i][j][k][3] * u[i][j][k][3] )
 	  / u[i][j][k][0];
@@ -2544,7 +2568,7 @@ c   xi-direction flux differences
 	flux[i][j][k][1] = (four/three) * tx3 * (u21i-u21im1);
 	flux[i][j][k][2] = tx3 * ( u31i - u31im1 );
 	flux[i][j][k][3] = tx3 * ( u41i - u41im1 );
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * tx3 * (   ( pow2(u21i)   + pow2(u31i)   + pow2(u41i) )
 		    - ( pow2(u21im1) + pow2(u31im1) + pow2(u41im1) ) )
 	  + (one/six)
@@ -2637,7 +2661,7 @@ c   eta-direction flux differences
 	flux[i][j][k][0] = u[i][j][k][2];
 	u31 = u[i][j][k][2] / u[i][j][k][0];
 
-	q = one/two * (  u[i][j][k][1] * u[i][j][k][1]
+	q = (one/two) * (  u[i][j][k][1] * u[i][j][k][1]
 		      + u[i][j][k][2] * u[i][j][k][2]
 		      + u[i][j][k][3] * u[i][j][k][3] )
 	  / u[i][j][k][0];
@@ -2678,7 +2702,7 @@ c   eta-direction flux differences
 	flux[i][j][k][1] = ty3 * ( u21j - u21jm1 );
 	flux[i][j][k][2] = (four/three) * ty3 * (u31j-u31jm1);
 	flux[i][j][k][3] = ty3 * ( u41j - u41jm1 );
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * ty3 * (   ( pow2(u21j)   + pow2(u31j)   + pow2(u41j) )
 		    - ( pow2(u21jm1) + pow2(u31jm1) + pow2(u41jm1) ) )
 	  + (one/six)
@@ -2771,7 +2795,7 @@ c   zeta-direction flux differences
 	flux[i][j][k][0] = u[i][j][k][3];
 	u41 = u[i][j][k][3] / u[i][j][k][0];
 
-	q = one/two * (  u[i][j][k][1] * u[i][j][k][1]
+	q = (one/two) * (  u[i][j][k][1] * u[i][j][k][1]
 		      + u[i][j][k][2] * u[i][j][k][2]
 		      + u[i][j][k][3] * u[i][j][k][3] )
 	  / u[i][j][k][0];
@@ -2807,7 +2831,7 @@ c   zeta-direction flux differences
 	flux[i][j][k][1] = tz3 * ( u21k - u21km1 );
 	flux[i][j][k][2] = tz3 * ( u31k - u31km1 );
 	flux[i][j][k][3] = (four/three) * tz3 * (u41k-u41km1);
-	flux[i][j][k][4] = one/two * ( one - C1*C5 )
+	flux[i][j][k][4] = (one/two) * ( one - C1*C5 )
 	  * tz3 * (   ( pow2(u21k)   + pow2(u31k)   + pow2(u41k) )
 		    - ( pow2(u21km1) + pow2(u31km1) + pow2(u41km1) ) )
 	  + (one/six)
@@ -3380,6 +3404,18 @@ c   after 50 time steps, with  DT = 5.0d-01
     *((uint32_t*)&xcrref[2]) = 0x1d1bdd8a;
     *((uint32_t*)&xcrref[3]) = 0x1d13fbaa;
     *((uint32_t*)&xcrref[4]) = 0x2c62c3e0;
+#elif (defined WITH_POSIT_16)
+    *((uint32_t*)&xcrref[0]) = 0x1825;
+    *((uint32_t*)&xcrref[1]) = 0xe40;
+    *((uint32_t*)&xcrref[2]) = 0xd1b;
+    *((uint32_t*)&xcrref[3]) = 0xd13;
+    *((uint32_t*)&xcrref[4]) = 0x1c62;
+#elif (defined WITH_POSIT_8)
+    *((uint32_t*)&xcrref[0]) = 0x8;
+    *((uint32_t*)&xcrref[1]) = 0x3;
+    *((uint32_t*)&xcrref[2]) = 0x2;
+    *((uint32_t*)&xcrref[3]) = 0x2;
+    *((uint32_t*)&xcrref[4]) = 0xc;
 #else
     xcrref[0] = 1.6196343210976702e-02;
     xcrref[1] = 2.1976745164821318e-03;
@@ -3397,6 +3433,18 @@ c   after 50 time steps, with  DT = 5.0d-01
     *((uint32_t*)&xceref[2]) = 0x13d6f2b3;
     *((uint32_t*)&xceref[3]) = 0x13d508df;
     *((uint32_t*)&xceref[4]) = 0x1caefe28;
+#elif (defined WITH_POSIT_16)
+    *((uint32_t*)&xcrref[0]) = 0xaa1;
+    *((uint32_t*)&xcrref[1]) = 0x660;
+    *((uint32_t*)&xcrref[2]) = 0x5eb;
+    *((uint32_t*)&xcrref[3]) = 0x5ea;
+    *((uint32_t*)&xcrref[4]) = 0xcae;
+#elif (defined WITH_POSIT_8)
+    *((uint32_t*)&xcrref[0]) = 0x1;
+    *((uint32_t*)&xcrref[1]) = 0x1;
+    *((uint32_t*)&xcrref[2]) = 0x1;
+    *((uint32_t*)&xcrref[3]) = 0x1;
+    *((uint32_t*)&xcrref[4]) = 0x2;
 #else
     xceref[0] = 6.4223319957960924e-04;
     xceref[1] = 8.4144342047347926e-05;
@@ -3410,6 +3458,10 @@ c   after 50 time steps, with DT = 5.0d-01
 --------------------------------------------------------------------*/
 #ifdef WITH_POSIT_32
     *((uint32_t*)&xciref) = 0x4bd7864a;
+#elif (defined WITH_POSIT_16)
+    *((uint32_t*)&xciref) = 0x57af;
+#elif (defined WITH_POSIT_8)
+    *((uint32_t*)&xciref) = 0x67;
 #else
     xciref = 7.8418928865937083;
 #endif
